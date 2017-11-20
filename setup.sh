@@ -33,6 +33,6 @@ touch browser/index.html
 
 
 echo "Please edit the following files:"
-echo "./.babelrc"
-echo "browser/index.html"
-echo "./webpack.config.js"
+echo "BABEL CONFIG   -> ./.babelrc"
+echo "ROOT HTML      -> browser/index.html"
+echo "WEBPACK CONFIG -> ./webpack.config.js"
