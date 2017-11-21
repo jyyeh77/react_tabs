@@ -28,9 +28,15 @@ yarn add html-webpack-plugin
 echo "Installing React..."
 yarn add react react-dom
 
+echo "Installing stylesheet embedding packages..."
+yarn add style-loader css-loader
+
 echo "Making browser directory with root HTML..."
 mkdir -p browser
 touch browser/index.html
+
+echo "Installing React types for Jetbrains IDEs"
+npm install @types/react --save
 
 
 echo "Please edit the following files:"

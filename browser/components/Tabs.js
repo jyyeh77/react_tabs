@@ -1,32 +1,35 @@
-import {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-class Tabs extends Component {
+class Tabs extends React.Component {
     constructor (props) {
         super(props);
-        this.state = {
-            selected: 0
-        };
+
+        const { activeTabIndex } = props;
+
+        this.state = { activeTabIndex };
 
         /**
          * @summary Set selected prop on component state to index of selected tab
          * @param index
          * @param event
          */
-        const clickHandler = (index, event) => {
-            event.preventDefault();
-            this.setState({
-                selected: index
-            });
+        const clickHandler = (index) => {
+            return (event) => {
+                event.preventDefault();
+                this.setState({
+                    activeTabIndex: index
+                });
+            }
         };
 
         this.displayLabels = (child, index) => {
-            const activeClass = this.state.selected === index ? 'active' : '';
+            const activeClass = this.state.activeTabIndex === index ? 'active' : '';
             return (
                 <li key={index}>
-                    <a href="#">
+                    <a href="#"
                         className={activeClass}
-                        onClick={clickHandler}
+                        onClick={clickHandler(index)}>
                         {child.props.label}
                     </a>
                 </li>
@@ -34,6 +37,11 @@ class Tabs extends Component {
         };
     }
 
+    /**
+     * @description Passes indices of child components to labels,
+     * renders labels above panels
+     * @returns {XML}
+     */
     renderTitles() {
         return (
             <ul className="tab_labels">
@@ -42,10 +50,14 @@ class Tabs extends Component {
         )
     }
 
+    /**
+     * @description Renders the correct child Pane component
+     * @returns {XML}
+     */
     renderContent () {
         return (
             <div className="tabs_content">
-                {this.props.children[this.state.selected]}
+                {this.props.children[this.state.activeTabIndex]}
             </div>
         );
     }
@@ -62,7 +74,12 @@ class Tabs extends Component {
 
 Tabs.propTypes = {
   renderTitles: PropTypes.func,
-  displayLabels: PropTypes.func
+  displayLabels: PropTypes.func,
+  activeTabIndex: PropTypes.number
+};
+
+Tabs.defaultProps = {
+    activeTabIndex: 0
 };
 
 export default Tabs;
